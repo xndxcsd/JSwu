@@ -26,7 +26,7 @@ public class GraderProxy implements InvocationHandler {
 
         if (gradeData != null) return gradeData;
 
-        //TODO setConnection
+        SwuConnection swuConnection = swuConfig.getSwuConnectionManager().getIfPresentOrPut(swuConfig.getSwuid(),swuConfig.getPassword());
 
         Grader grader = swuConfig.getGraderFactory().getGrader();
         Object result = method.invoke(grader, args);

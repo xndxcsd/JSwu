@@ -1,5 +1,8 @@
 package cn.edu.swu;
-import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.NameValuePair;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -9,10 +12,13 @@ import java.util.List;
  */
 public interface SwuConnection {
 
-    public SwuConnection init(String swuid,String password);
 
-    public void release();
+    public void release() throws IOException;
 
-    public void post(String url, List<BasicNameValuePair> nameValuePairList);
+    public String post(String url, List<NameValuePair> nameValuePairList) throws IOException;
+
+    public String get(String url);
+
+    public void getAccessOfJW();
 
 }

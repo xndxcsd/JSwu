@@ -8,7 +8,7 @@ package cn.edu.swu;
 public class demo {
 
     public static void main(String[] args) {
-        SwuConfig swuConfig = new SwuConfig.Builder("2", "2")
+        SwuConfig swuConfig = new SwuConfig.Builder("222014321210033", "7281542csd")
                 .setCacheTime(1000000L)
                 .build();
 

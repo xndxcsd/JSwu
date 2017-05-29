@@ -12,5 +12,4 @@ public interface Grader {
     // Grader的返回值类型必须为String
     String getJsonGrade();
 
-
 }
