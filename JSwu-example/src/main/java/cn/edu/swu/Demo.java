@@ -5,7 +5,7 @@ package cn.edu.swu;
  * <p>
  * Email : chensiding@qq.com
  */
-public class demo {
+public class Demo {
 
     public static void main(String[] args) {
         SwuConfig swuConfig = new SwuConfig.Builder("222014321210033", "7281542csd")
@@ -15,7 +15,7 @@ public class demo {
         SwuManager swuManager = new SwuManager(swuConfig);
 
         Grader grader = swuManager.getGrader();
-        System.out.println(grader.getJsonGrade());
+        System.out.println(grader.getJsonGrades());
 
     }
 }

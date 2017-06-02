@@ -30,7 +30,12 @@ public class SimpleGrader implements Grader,ConnectionInject {
         this.swuConnection.getAccessOfJW();
     }
 
-    public String getJsonGrade() {
+
+    public String getJsonGrades() {
+//        this.swuConnection.post();
+
+        //这里应该有bug
+//        List<BasicNameValuePair> nameValuePair = new ArrayList<BasicNameValuePair>();
 
         List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>();
         nameValuePair.add(new BasicNameValuePair("_search", "false"));
@@ -53,5 +58,24 @@ public class SimpleGrader implements Grader,ConnectionInject {
         return response;
     }
 
+    public String getJsonGrades(int year) {
+        return null;
+    }
+
+    public String getJsonGrades(int year, int term) {
+        return null;
+    }
+
+    public List<Grade> getGrades() {
+        return null;
+    }
+
+    public List<Grade> getGrades(int year) {
+        return null;
+    }
+
+    public List<Grade> getGrades(int year, int term) {
+        return null;
+    }
 
 }

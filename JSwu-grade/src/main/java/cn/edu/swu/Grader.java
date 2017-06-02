@@ -1,6 +1,6 @@
 package cn.edu.swu;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by 西南大学开源协会 陈思定 on 2017/5/21.
@@ -9,7 +9,16 @@ import java.util.Map;
  */
 public interface Grader {
 
-    // Grader的返回值类型必须为String
-    String getJsonGrade();
+    String getJsonGrades();
+
+    String getJsonGrades(int year);
+
+    String getJsonGrades(int year, int term);
+
+    List<Grade> getGrades();
+
+    List<Grade> getGrades(int year);
+
+    List<Grade> getGrades(int year, int term);
 
 }
