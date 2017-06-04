@@ -6,7 +6,7 @@ package cn.edu.swu.common;
  * Email : chensiding@qq.com
  */
 public class Constant {
-    public static final String URL_LOGIN="http://ids1.swu.edu.cn:81/amserver/UI/Login";
+    public static final String URL_LOGIN = "http://ids1.swu.edu.cn:81/amserver/UI/Login";
 
     public static final String URL_JW = "http://jw.swu.edu.cn/jwglxt/idstar/index.jsp";
 

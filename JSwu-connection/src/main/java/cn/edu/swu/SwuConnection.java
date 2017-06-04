@@ -1,8 +1,8 @@
 package cn.edu.swu;
+
 import org.apache.http.NameValuePair;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -20,5 +20,7 @@ public interface SwuConnection {
     public String get(String url);
 
     public void getAccessOfJW() throws IOException;
+
+    public String getSwuid();
 
 }

@@ -11,8 +11,6 @@ public interface SwuConnectionManager {
 
     public SwuConnection getIfPresentOrPut(String swuid, String password);
 
-    public void putConnection(SwuConnection swuConnection);
-
     public void release(SwuConnection swuConnection);
 
     public void putIfAbsent(SwuConnection swuConnection);

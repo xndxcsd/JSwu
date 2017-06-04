@@ -7,7 +7,7 @@ package cn.edu.swu.common;
  */
 public class Years {
 
-    public synchronized static String getYear(Integer year){
+    public synchronized static String getYear(Integer year) {
 
         // 教务系统只能查询2009年后的成绩，当传入<2009的数字时，返回查询所有学年成绩的""
         if (year == null || year < 2009) return "";

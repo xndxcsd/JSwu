@@ -7,18 +7,15 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.CookieStore;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.cookie.BasicClientCookie;
-import org.apache.http.impl.cookie.BasicClientCookie2;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -26,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -87,7 +83,7 @@ public class DefaultSwuConnection implements SwuConnection {
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            throw new IOException("won't happen");
+            throw new IOException("接口参数错误");
         }
     }
 
@@ -126,8 +122,13 @@ public class DefaultSwuConnection implements SwuConnection {
         entity.add(new BasicNameValuePair("encoded", "true"));
         entity.add(new BasicNameValuePair("gx_charset", "UTF-8"));
 
-        post(URL_LOGIN,entity);
+        post(URL_LOGIN, entity);
         get(URL_JW);
+    }
+
+    @Override
+    public String getSwuid() {
+        return this.swuid;
     }
 
     private void setCookies(String str) throws IOException {
@@ -140,7 +141,7 @@ public class DefaultSwuConnection implements SwuConnection {
             String tgt = bean.getData().getGetUserInfoByUserNameResponse().getReturnX().getInfo().getAttributes().getTgt();
             String cookie = new String(Base64.getDecoder().decode(tgt.getBytes()));
 
-            BasicClientCookie c2 = new BasicClientCookie("CASTGC", "\""+cookie+"\"");
+            BasicClientCookie c2 = new BasicClientCookie("CASTGC", "\"" + cookie + "\"");
             c2.setPath("/cas/");
             cookieStore.addCookie(c2);
 

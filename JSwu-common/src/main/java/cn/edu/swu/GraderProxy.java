@@ -22,15 +22,15 @@ public class GraderProxy implements InvocationHandler {
 
         Cache cache = swuConfig.getCache();
 
-        String gradeData = cache.getCache(method);
+        String gradeData = (String) cache.getCache(method.hashCode());
 
         if (gradeData != null) return gradeData;
 
-        SwuConnection swuConnection = swuConfig.getSwuConnectionManager().getIfPresentOrPut(swuConfig.getSwuid(),swuConfig.getPassword());
+        SwuConnection swuConnection = swuConfig.getSwuConnectionManager().getIfPresentOrPut(swuConfig.getSwuid(), swuConfig.getPassword());
 
         Grader grader = swuConfig.getGraderFactory().getGrader();
         Object result = method.invoke(grader, args);
-        cache.putCache(method, result);
+        cache.putCache(method.hashCode(), result);
         return result;
     }
 }

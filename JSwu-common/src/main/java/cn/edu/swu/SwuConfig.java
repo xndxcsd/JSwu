@@ -13,14 +13,13 @@ public class SwuConfig {
     private String swuid;
     private String password;
 
-    // 缓存时间
-    private Long cacheTime;
+    private Integer cacheTime;
 
     private Cache cache;
     private GraderFactory graderFactory;
     private SwuConnectionManager swuConnectionManager;
 
-    private SwuConfig(String swuid, String password, Long cacheTime, Cache cache, GraderFactory graderFactory, SwuConnectionManager swuConnectionManager) {
+    private SwuConfig(String swuid, String password, Integer cacheTime, Cache cache, GraderFactory graderFactory, SwuConnectionManager swuConnectionManager) {
         this.swuid = swuid;
         this.password = password;
         this.cacheTime = cacheTime;
@@ -41,7 +40,7 @@ public class SwuConfig {
         return password;
     }
 
-    public long getCacheTime() {
+    public Integer getCacheTime() {
         return cacheTime;
     }
 
@@ -56,12 +55,10 @@ public class SwuConfig {
 
     public static class Builder {
 
-        private final Long DEFAULT_CACHE_TIME = 10000000L;
         private String swuid;
         private String password;
 
-        // 缓存时间
-        private Long cacheTime;
+        private Integer cacheTime;
 
         private Cache cache;
         private GraderFactory graderFactory;
@@ -87,7 +84,7 @@ public class SwuConfig {
             return this;
         }
 
-        public Builder setCacheTime(Long cacheTime) {
+        public Builder setCacheTime(Integer cacheTime) {
             this.cacheTime = cacheTime;
             return this;
         }
@@ -105,14 +102,15 @@ public class SwuConfig {
 
         public SwuConfig build() {
 
-            if (this.cacheTime == null) {
-                this.cacheTime = DEFAULT_CACHE_TIME;
-            }
             if (this.cache == null) {
-                this.cache = new DefaultCache();
+                if (this.cacheTime == null) {
+                    this.cache = new DefaultCache();
+                } else {
+                    this.cache = new DefaultCache(this.cacheTime);
+                }
             }
             if (this.graderFactory == null) {
-                this.graderFactory = new SimpleGraderFactory(this.swuid, this.password);
+                this.graderFactory = new SimpleGraderFactory(this.swuid);
             }
             if (this.swuConnectionManager == null) {
                 this.swuConnectionManager = DefaultSwuConnectionManager.getInstance();
@@ -120,7 +118,6 @@ public class SwuConfig {
 
             return new SwuConfig(this.swuid, this.password, this.cacheTime, this.cache, this.graderFactory, this.swuConnectionManager);
         }
-
 
 
     }

@@ -16,6 +16,7 @@
         <module>JSwu-example</module>
         <module>JSwu-grade-simple</module>
         <module>JSwu-connection-simple</module>
+        <module>JSwu-cache-simple</module>
     </modules>
     <dependencies>
         <dependency>

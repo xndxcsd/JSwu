@@ -10,7 +10,7 @@ public class Terms {
     public static final String TWO = "12";
     public static final String THREE = "16";
 
-    public synchronized static String getTerm(Integer term){
+    public synchronized static String getTerm(Integer term) {
 
         if (term == null) return "";
         switch (term) {

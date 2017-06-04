@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.edu.swu.common.Constant.*;
+import static cn.edu.swu.common.Constant.URL_GRADE;
 
 /**
  * Created by 西南大学开源协会 陈思定 on 2017/5/21.
@@ -17,26 +17,24 @@ import static cn.edu.swu.common.Constant.*;
  * Email : chensiding@qq.com
  */
 
-public class SimpleGrader implements Grader,ConnectionInject {
+public class SimpleGrader implements Grader, ConnectionInject {
 
     private String swuid;
-    private String password;
     private SwuConnection swuConnection;
 
-    public SimpleGrader(String swuid, String password) throws IOException {
+    public SimpleGrader(String swuid) throws IOException {
         this.swuid = swuid;
-        this.password = password;
-        // get connection from ConnectionInject
+        // 接口注入连接
         this.swuConnection = getSwuConnection(swuid);
         this.swuConnection.getAccessOfJW();
     }
 
     public String getJsonGrades() {
-        return getJsonGrades(null,null);
+        return getJsonGrades(null, null);
     }
 
     public String getJsonGrades(Integer year) {
-        return getJsonGrades(year,null);
+        return getJsonGrades(year, null);
     }
 
     public String getJsonGrades(Integer year, Integer term) {
@@ -55,7 +53,7 @@ public class SimpleGrader implements Grader,ConnectionInject {
 
         String response = null;
         try {
-            response = this.swuConnection.post(URL_GRADE+this.swuid, nameValuePair);
+            response = this.swuConnection.post(URL_GRADE + this.swuid, nameValuePair);
         } catch (IOException e) {
             e.printStackTrace();
         }

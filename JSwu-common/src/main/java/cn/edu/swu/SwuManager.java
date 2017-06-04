@@ -22,7 +22,7 @@ public class SwuManager {
     }
 
     public Grader getGrader() {
-        LOGGER.debug("get Grader Invoker!");
+        LOGGER.debug("get Grader Invoker , swuid:{}", swuConfig.getSwuid());
         GraderProxy graderProxy = new GraderProxy(swuConfig);
         Grader grader = (Grader) Proxy.newProxyInstance(Grader.class.getClassLoader(), new Class[]{Grader.class}, graderProxy);
         return grader;
