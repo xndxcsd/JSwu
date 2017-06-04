@@ -1,5 +1,6 @@
 package cn.edu.swu;
 
+import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -19,7 +20,7 @@ public class SimpleGraderFactory implements GraderFactory {
         this.password = password;
     }
 
-    public Grader getGrader() {
+    public Grader getGrader() throws IOException {
         Grader grader = CACHE.get(this.swuid);
         if (grader == null) {
             //FIXME

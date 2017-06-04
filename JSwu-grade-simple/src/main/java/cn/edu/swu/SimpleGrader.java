@@ -1,11 +1,12 @@
 package cn.edu.swu;
 
+import cn.edu.swu.common.Terms;
+import cn.edu.swu.common.Years;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static cn.edu.swu.common.Constant.*;
@@ -22,7 +23,7 @@ public class SimpleGrader implements Grader,ConnectionInject {
     private String password;
     private SwuConnection swuConnection;
 
-    public SimpleGrader(String swuid, String password) {
+    public SimpleGrader(String swuid, String password) throws IOException {
         this.swuid = swuid;
         this.password = password;
         // get connection from ConnectionInject
@@ -30,12 +31,15 @@ public class SimpleGrader implements Grader,ConnectionInject {
         this.swuConnection.getAccessOfJW();
     }
 
-
     public String getJsonGrades() {
-//        this.swuConnection.post();
+        return getJsonGrades(null,null);
+    }
 
-        //这里应该有bug
-//        List<BasicNameValuePair> nameValuePair = new ArrayList<BasicNameValuePair>();
+    public String getJsonGrades(Integer year) {
+        return getJsonGrades(year,null);
+    }
+
+    public String getJsonGrades(Integer year, Integer term) {
 
         List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>();
         nameValuePair.add(new BasicNameValuePair("_search", "false"));
@@ -44,9 +48,9 @@ public class SimpleGrader implements Grader,ConnectionInject {
         nameValuePair.add(new BasicNameValuePair("queryModel.showCount", "150"));
         nameValuePair.add(new BasicNameValuePair("queryModel.sortName", ""));
         nameValuePair.add(new BasicNameValuePair("queryModel.sortOrder", "asc"));
-        nameValuePair.add(new BasicNameValuePair("time", "1"));
-        nameValuePair.add(new BasicNameValuePair("xnm", ""));
-        nameValuePair.add(new BasicNameValuePair("xqm", ""));
+        nameValuePair.add(new BasicNameValuePair("time", "0"));
+        nameValuePair.add(new BasicNameValuePair("xnm", Years.getYear(year)));
+        nameValuePair.add(new BasicNameValuePair("xqm", Terms.getTerm(term)));
 
 
         String response = null;
@@ -58,24 +62,17 @@ public class SimpleGrader implements Grader,ConnectionInject {
         return response;
     }
 
-    public String getJsonGrades(int year) {
-        return null;
-    }
-
-    public String getJsonGrades(int year, int term) {
-        return null;
-    }
-
     public List<Grade> getGrades() {
         return null;
     }
 
-    public List<Grade> getGrades(int year) {
+    public List<Grade> getGrades(Integer year) {
         return null;
     }
 
-    public List<Grade> getGrades(int year, int term) {
+    public List<Grade> getGrades(Integer year, Integer term) {
         return null;
     }
+
 
 }

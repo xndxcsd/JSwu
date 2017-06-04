@@ -1,5 +1,8 @@
 package cn.edu.swu;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Proxy;
 
 /**
@@ -9,6 +12,9 @@ import java.lang.reflect.Proxy;
  */
 public class SwuManager {
 
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SwuManager.class);
+
     private SwuConfig swuConfig;
 
     public SwuManager(SwuConfig swuConfig) {
@@ -16,6 +22,7 @@ public class SwuManager {
     }
 
     public Grader getGrader() {
+        LOGGER.debug("get Grader Invoker!");
         GraderProxy graderProxy = new GraderProxy(swuConfig);
         Grader grader = (Grader) Proxy.newProxyInstance(Grader.class.getClassLoader(), new Class[]{Grader.class}, graderProxy);
         return grader;

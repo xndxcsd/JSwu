@@ -19,6 +19,6 @@ public interface SwuConnection {
 
     public String get(String url);
 
-    public void getAccessOfJW();
+    public void getAccessOfJW() throws IOException;
 
 }

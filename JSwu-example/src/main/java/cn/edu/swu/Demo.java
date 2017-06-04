@@ -8,14 +8,12 @@ package cn.edu.swu;
 public class Demo {
 
     public static void main(String[] args) {
-        SwuConfig swuConfig = new SwuConfig.Builder("222014321210033", "7281542csd")
+        SwuConfig swuConfig = new SwuConfig.Builder("your_swuid", "password")
                 .setCacheTime(1000000L)
                 .build();
-
         SwuManager swuManager = new SwuManager(swuConfig);
 
         Grader grader = swuManager.getGrader();
         System.out.println(grader.getJsonGrades());
-
     }
 }

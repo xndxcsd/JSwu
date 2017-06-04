@@ -40,6 +40,9 @@ import static cn.edu.swu.common.Constant.*;
  */
 public class DefaultSwuConnection implements SwuConnection {
 
+    private final String password;
+    private final String swuid;
+
     public static final Logger LOGGER = LoggerFactory.getLogger(DefaultSwuConnection.class);
     private static final ObjectMapper objectMapper = new ObjectMapper();
     /*设置请求配置,设置了连接超时和读取超时*/
@@ -50,21 +53,15 @@ public class DefaultSwuConnection implements SwuConnection {
     private CloseableHttpClient httpClient;
     private CookieStore cookieStore = new BasicCookieStore();
 
-    public DefaultSwuConnection(String swuid, String password) throws IOException {
+
+    public DefaultSwuConnection(String swuid, String password) {
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
         httpClient = httpClientBuilder
                 .useSystemProperties()
                 .setDefaultCookieStore(cookieStore)
                 .build();
-
-        HttpPost httpPost = new HttpPost(URL_LOGIN);
-        //TODO Log for timeout
-        httpPost.setConfig(requestConfig);
-        String entity = String.format(LOGIN_CONTENT, swuid, password);
-        String base64entity = Base64.getEncoder().encodeToString(entity.getBytes());
-        List<NameValuePair> data = new ArrayList<>();
-        data.add(new BasicNameValuePair("serviceInfo", base64entity));
-        setCookies(post(URL_LOGIN, data));
+        this.swuid = swuid;
+        this.password = password;
     }
 
     @Override
@@ -78,18 +75,16 @@ public class DefaultSwuConnection implements SwuConnection {
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairList));
             CloseableHttpResponse closeableHttpResponse = httpClient.execute(httpPost);
-            if (closeableHttpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                 /*获得响应*/
-                HttpEntity httpEntity = closeableHttpResponse.getEntity();
-                String response = EntityUtils.toString(httpEntity);
-                // release
-                EntityUtils.consume(httpEntity);
-                closeableHttpResponse.close();
-                return response;
-            } else {
-                //TODO LOG
-                throw new IOException("can't connect jw");
-            }
+
+            LOGGER.debug("发送认证成功");
+             /*获得响应*/
+            HttpEntity httpEntity = closeableHttpResponse.getEntity();
+            String response = EntityUtils.toString(httpEntity);
+            // release
+            EntityUtils.consume(httpEntity);
+            closeableHttpResponse.close();
+            return response;
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             throw new IOException("won't happen");
@@ -121,7 +116,17 @@ public class DefaultSwuConnection implements SwuConnection {
     }
 
     @Override
-    public void getAccessOfJW() {
+    public void getAccessOfJW() throws IOException {
+        List<NameValuePair> entity = new ArrayList<>();
+        entity.add(new BasicNameValuePair("IDToken0", ""));
+        entity.add(new BasicNameValuePair("IDToken1", swuid));
+        entity.add(new BasicNameValuePair("IDToken2", password));
+        entity.add(new BasicNameValuePair("IDButton", "Submit"));
+        entity.add(new BasicNameValuePair("goto", "aHR0cDovL2p3LnN3dS5lZHUuY24vandnbHh0L2lkc3Rhci9pbmRleC5qc3A="));
+        entity.add(new BasicNameValuePair("encoded", "true"));
+        entity.add(new BasicNameValuePair("gx_charset", "UTF-8"));
+
+        post(URL_LOGIN,entity);
         get(URL_JW);
     }
 
@@ -131,22 +136,14 @@ public class DefaultSwuConnection implements SwuConnection {
             if (!bean.isSuccess()) {
                 throw new IOException("西南大学校园认证失败");
             }
+            LOGGER.debug("西南大学校园认证成功");
             String tgt = bean.getData().getGetUserInfoByUserNameResponse().getReturnX().getInfo().getAttributes().getTgt();
             String cookie = new String(Base64.getDecoder().decode(tgt.getBytes()));
 
-            BasicClientCookie c1 = new BasicClientCookie("rtx_rep", "no");
-            c1.setDomain("i.swu.edu.cn");   //设置范围
-            c1.setPath("/");
-            BasicClientCookie c2 = new BasicClientCookie("CASTGC", cookie);
-            c2.setDomain("i.swu.edu.cn");   //设置范围
-            c2.setPath("/");
-
-            cookieStore.addCookie(c1);
+            BasicClientCookie c2 = new BasicClientCookie("CASTGC", "\""+cookie+"\"");
+            c2.setPath("/cas/");
             cookieStore.addCookie(c2);
-//            List<Cookie> cookies = cookieStore.getCookies();
-//            for (int i = 0; i < cookies.size(); i++) {
-//                System.out.println("Local cookie: " + cookies.get(i));
-//            }
+
         } catch (IOException e) {
             LOGGER.error("无法解析返回值 : {}", str, e);
         }

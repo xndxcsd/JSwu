@@ -8,7 +8,6 @@ package cn.edu.swu.common;
 public class Constant {
 
     // 需要使用swuid格式化
-    public static final String URL_GRADE = "http://jw.swu.edu.cn/jwglxt/kbcx/xskbcx_cxXsKb.html?" +
-            "gnmkdmKey=N253508&sessionUserKey=";
+    public static final String URL_GRADE = "http://jw.swu.edu.cn/jwglxt/cjcx/cjcx_cxDgXscj.html?doType=query&gnmkdmKey=N305005&sessionUserKey=";
 
 }

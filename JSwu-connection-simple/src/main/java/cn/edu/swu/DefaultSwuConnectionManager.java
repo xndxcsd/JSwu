@@ -59,11 +59,7 @@ public class DefaultSwuConnectionManager implements SwuConnectionManager {
 
     private SwuConnection initSwuConnection(String swuid, String password){
         SwuConnection swuConnection = null;
-        try {
-            swuConnection = new DefaultSwuConnection(swuid, password);
-        } catch (IOException e) {
-            LOGGER.error("无法建立网络连接，请检查网络环境，swuid={}",swuid);
-        }
+        swuConnection = new DefaultSwuConnection(swuid, password);
         return swuConnection;
     }
 

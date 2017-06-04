@@ -11,14 +11,14 @@ public interface Grader {
 
     String getJsonGrades();
 
-    String getJsonGrades(int year);
+    String getJsonGrades(Integer year);
 
-    String getJsonGrades(int year, int term);
+    String getJsonGrades(Integer year, Integer term);
 
     List<Grade> getGrades();
 
-    List<Grade> getGrades(int year);
+    List<Grade> getGrades(Integer year);
 
-    List<Grade> getGrades(int year, int term);
+    List<Grade> getGrades(Integer year, Integer term);
 
 }
