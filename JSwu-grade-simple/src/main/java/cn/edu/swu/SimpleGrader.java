@@ -38,7 +38,7 @@ public class SimpleGrader implements Grader, ConnectionInject {
     }
 
     public String getJsonGrades(Integer year, Integer term) {
-
+        // TODO check parameter: throw IllegalArgumentException
         List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>();
         nameValuePair.add(new BasicNameValuePair("_search", "false"));
         nameValuePair.add(new BasicNameValuePair("nd", "1451922678091"));
