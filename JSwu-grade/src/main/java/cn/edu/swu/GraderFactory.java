@@ -8,6 +8,6 @@ import java.io.IOException;
  * Email : chensiding@qq.com
  */
 public interface GraderFactory {
-    public Grader getGrader() throws IOException;
+    Grader getGrader() throws IOException;
 
 }

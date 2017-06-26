@@ -60,17 +60,5 @@ public class SimpleGrader implements Grader, ConnectionInject {
         return response;
     }
 
-    public List<Grade> getGrades() {
-        return null;
-    }
-
-    public List<Grade> getGrades(Integer year) {
-        return null;
-    }
-
-    public List<Grade> getGrades(Integer year, Integer term) {
-        return null;
-    }
-
 
 }

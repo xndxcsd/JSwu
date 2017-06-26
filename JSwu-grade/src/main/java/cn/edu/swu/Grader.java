@@ -15,10 +15,4 @@ public interface Grader {
 
     String getJsonGrades(Integer year, Integer term);
 
-    List<Grade> getGrades();
-
-    List<Grade> getGrades(Integer year);
-
-    List<Grade> getGrades(Integer year, Integer term);
-
 }

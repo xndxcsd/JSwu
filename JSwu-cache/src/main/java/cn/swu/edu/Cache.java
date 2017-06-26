@@ -7,13 +7,13 @@ package cn.swu.edu;
  */
 public interface Cache {
 
-    public Object getCache(Integer hash);
+    Object getCache(Integer hash);
 
-    public void putCache(Integer hash, Object object);
+    void putCache(Integer hash, Object object);
 
-    public void remove(Integer hash);
+    void remove(Integer hash);
 
-    public void removeAll();
+    void removeAll();
 
 
 }

@@ -7,13 +7,13 @@ package cn.edu.swu;
  */
 public interface SwuConnectionManager {
 
-    public SwuConnection getConnection(String swuid);
+    SwuConnection getConnection(String swuid);
 
-    public SwuConnection getIfPresentOrPut(String swuid, String password);
+    SwuConnection getIfPresentOrPut(String swuid, String password);
 
-    public void release(SwuConnection swuConnection);
+    void release(SwuConnection swuConnection);
 
-    public void putIfAbsent(SwuConnection swuConnection);
+    void putIfAbsent(SwuConnection swuConnection);
 
 
 }

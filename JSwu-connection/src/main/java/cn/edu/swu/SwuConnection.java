@@ -13,14 +13,14 @@ import java.util.List;
 public interface SwuConnection {
 
 
-    public void release() throws IOException;
+    void release() throws IOException;
 
-    public String post(String url, List<NameValuePair> nameValuePairList) throws IOException;
+    String post(String url, List<NameValuePair> nameValuePairList) throws IOException;
 
-    public String get(String url);
+    String get(String url);
 
-    public void getAccessOfJW() throws IOException;
+    void getAccessOfJW() throws IOException;
 
-    public String getSwuid();
+    String getSwuid();
 
 }
