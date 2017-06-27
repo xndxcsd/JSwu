@@ -17,10 +17,11 @@ public interface SwuConnection {
 
     String post(String url, List<NameValuePair> nameValuePairList) throws IOException;
 
-    String get(String url);
+    String get(String url) throws IOException;
 
     void getAccessOfJW() throws IOException;
 
     String getSwuid();
 
+    Boolean isOpen();
 }

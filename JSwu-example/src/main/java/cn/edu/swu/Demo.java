@@ -8,7 +8,7 @@ package cn.edu.swu;
 public class Demo {
 
     public static void main(String[] args) {
-        SwuConfig swuConfig = new SwuConfig.Builder("your_swuid", "password")
+        SwuConfig swuConfig = new SwuConfig.Builder("your_swuid", "your_password")
                 .build();
         SwuManager swuManager = new SwuManager(swuConfig);
 

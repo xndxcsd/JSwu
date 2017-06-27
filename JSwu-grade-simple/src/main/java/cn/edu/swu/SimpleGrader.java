@@ -2,6 +2,7 @@ package cn.edu.swu;
 
 import cn.edu.swu.common.Terms;
 import cn.edu.swu.common.Years;
+import cn.swu.edu.JsonUtil;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -39,6 +40,9 @@ public class SimpleGrader implements Grader, ConnectionInject {
 
     public String getJsonGrades(Integer year, Integer term) {
         // TODO check parameter: throw IllegalArgumentException
+        if (!swuConnection.isOpen()) {
+            return "";
+        }
         List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>();
         nameValuePair.add(new BasicNameValuePair("_search", "false"));
         nameValuePair.add(new BasicNameValuePair("nd", "1451922678091"));
@@ -55,7 +59,7 @@ public class SimpleGrader implements Grader, ConnectionInject {
         try {
             response = this.swuConnection.post(URL_GRADE + this.swuid, nameValuePair);
         } catch (IOException e) {
-            e.printStackTrace();
+            return e.getMessage();
         }
         return response;
     }

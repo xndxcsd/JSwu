@@ -17,6 +17,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.CharArrayBuffer;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,14 +48,14 @@ public class DefaultSwuConnection implements SwuConnection {
             .setSocketTimeout(DEFAULT_CONNECTION_TIMEOUT)
             .build();
     private CloseableHttpClient httpClient;
-    private CookieStore cookieStore = new BasicCookieStore();
+
+    private Boolean opened=false;
 
 
     public DefaultSwuConnection(String swuid, String password) {
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
         httpClient = httpClientBuilder
                 .useSystemProperties()
-                .setDefaultCookieStore(cookieStore)
                 .build();
         this.swuid = swuid;
         this.password = password;
@@ -83,7 +84,9 @@ public class DefaultSwuConnection implements SwuConnection {
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            throw new IOException("接口参数错误");
+            IOException e2= new IOException("接口参数错误");
+            e2.printStackTrace();
+            throw e2;
         }
     }
 
@@ -102,11 +105,11 @@ public class DefaultSwuConnection implements SwuConnection {
                 response = EntityUtils.toString(httpEntity);
                 EntityUtils.consume(httpEntity);
             } else {
-                throw new IOException("can't connect jw");
+                LOGGER.debug("network problem : can't connect jw");
+                throw new IOException("network problem : can't connect jw");
             }
-
         } catch (IOException e) {
-            //
+            e.printStackTrace();
         }
         return response;
     }
@@ -123,7 +126,10 @@ public class DefaultSwuConnection implements SwuConnection {
         entity.add(new BasicNameValuePair("gx_charset", "UTF-8"));
 
         post(URL_LOGIN, entity);
-        get(URL_JW);
+        if (!isSuccessAccessJW(get(URL_JW))) {
+            LOGGER.debug("登陆失败，用户名或密码错误 swuid : {} password : {} ",swuid,password);
+            new IllegalAccessException("用户名或密码错误").printStackTrace();
+        }
     }
 
     @Override
@@ -131,24 +137,13 @@ public class DefaultSwuConnection implements SwuConnection {
         return this.swuid;
     }
 
-    private void setCookies(String str) throws IOException {
-        try {
-            LoginResponseBean bean = objectMapper.readValue(str, LoginResponseBean.class);
-            if (!bean.isSuccess()) {
-                throw new IOException("西南大学校园认证失败");
-            }
-            LOGGER.debug("西南大学校园认证成功");
-            String tgt = bean.getData().getGetUserInfoByUserNameResponse().getReturnX().getInfo().getAttributes().getTgt();
-            String cookie = new String(Base64.getDecoder().decode(tgt.getBytes()));
+    @Override
+    public Boolean isOpen() {
+        return this.opened;
+    }
 
-            BasicClientCookie c2 = new BasicClientCookie("CASTGC", "\"" + cookie + "\"");
-            c2.setPath("/cas/");
-            cookieStore.addCookie(c2);
-
-        } catch (IOException e) {
-            LOGGER.error("无法解析返回值 : {}", str, e);
-        }
-
-
+    private Boolean isSuccessAccessJW(String response){
+        Boolean ans =!response.contains("http://ids1.swu.edu.cn:81/amserver/UI/Login?goto=http%3A%2F%2Fjw.swu.edu.cn%2Fjwglxt%2Fidstar%2Findex.jsp");
+        return ans && (opened = ans);
     }
 }
