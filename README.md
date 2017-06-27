@@ -2,6 +2,9 @@
 
 JSwu是一个易扩展,极简单的java框架.你可以使用它快速构建关于西南大学的校园应用.框架内置了缓存和连接池,方便开发者开发应用程序的同时,坚决不给教务等系统造成丝毫压力.
 
+## 使用
+[Release](https://github.com/xndxcsd/JSwu/releases)  
+
 ## 一个简单的示例
 
 要使用JSwu构建一个校园应用非常简单快速:
@@ -23,6 +26,10 @@ public class demo {
 
 
 ## 贡献
+
+使用和编译JSwu需要满足一下要求
+- oracle jdk 1.8 +
+- apache maven 3 +
 
 JSWu的详细设计参见[开发者文档](DEVELOPER-GUIDE.md)
 
