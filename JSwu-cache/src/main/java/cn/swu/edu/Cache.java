@@ -15,5 +15,6 @@ public interface Cache {
 
     void removeAll();
 
+    int size();
 
 }

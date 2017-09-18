@@ -68,6 +68,11 @@ public class DefaultCache implements Cache {
         CACHE.clear();
     }
 
+    @Override
+    public int size() {
+        return CACHE.size();
+    }
+
     private class FreshCache extends TimerTask {
 
         private HashMap<Integer, Integer> countTimeMap = new HashMap<Integer, Integer>();

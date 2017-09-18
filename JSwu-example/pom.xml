@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.edu.swu</groupId>
-            <artifactId>JSwu-common</artifactId>
+            <artifactId>JSwu-client</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
