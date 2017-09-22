@@ -28,5 +28,12 @@ public class SwuManager {
         return grader;
     }
 
+    public Scheduler getScheduler() {
+        LOGGER.debug("get Scheduler Invoker , swuid:{}", swuConfig.getSwuid());
+        SchedulerProxy schedulerProxy = new SchedulerProxy(swuConfig);
+        Scheduler scheduler = (Scheduler) Proxy.newProxyInstance(Scheduler.class.getClassLoader(),new Class[]{Scheduler.class},schedulerProxy);
+        return scheduler;
+    }
+
 
 }

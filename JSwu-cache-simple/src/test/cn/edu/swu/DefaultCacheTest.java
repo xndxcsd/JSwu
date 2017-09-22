@@ -1,11 +1,9 @@
-package cn.swu.edu;
+package cn.edu.swu;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Random;
 
 /**
  * Created by 西南大学开源协会 陈思定  on 2017/8/27.

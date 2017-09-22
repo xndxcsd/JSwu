@@ -1,8 +1,5 @@
 package cn.edu.swu;
 
-import cn.edu.swu.common.Terms;
-import cn.edu.swu.common.Years;
-import cn.swu.edu.JsonUtil;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -10,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.edu.swu.common.Constant.URL_GRADE;
+import static cn.edu.swu.Constant.URL_GRADE;
 
 /**
  * Created by 西南大学开源协会 陈思定 on 2017/5/21.
@@ -27,7 +24,8 @@ public class SimpleGrader implements Grader, ConnectionInject {
         this.swuid = swuid;
         // 接口注入连接
         this.swuConnection = getSwuConnection(swuid);
-        this.swuConnection.getAccessOfJW();
+        if(!this.swuConnection.isOpen())
+            this.swuConnection.getAccessOfJW();
     }
 
     /**

@@ -1,7 +1,5 @@
 package cn.edu.swu;
 
-import cn.swu.edu.Cache;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 

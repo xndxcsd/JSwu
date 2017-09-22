@@ -25,3 +25,7 @@ hs_err_pid*
 *.iml
 .idea
 target
+
+# .git
+.gitignore
+JSwu-example/src/main/java/cn/edu/swu/Demo_local.java

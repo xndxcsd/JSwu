@@ -1,4 +1,4 @@
-package cn.swu.edu;
+package cn.edu.swu;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

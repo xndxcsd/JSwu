@@ -1,8 +1,5 @@
 package cn.edu.swu;
 
-import cn.swu.edu.Cache;
-import cn.swu.edu.DefaultCache;
-
 /**
  * Created by 西南大学开源协会 陈思定 on 2017/5/20.
  * <p>
@@ -17,15 +14,17 @@ public class SwuConfig {
 
     private Cache cache;
     private GraderFactory graderFactory;
+    private SchedulerFactory schedulerFactory;
     private SwuConnectionManager swuConnectionManager;
 
-    private SwuConfig(String swuid, String password, Integer cacheTime, Cache cache, GraderFactory graderFactory, SwuConnectionManager swuConnectionManager) {
+    private SwuConfig(String swuid, String password, Integer cacheTime, Cache cache, GraderFactory graderFactory, SwuConnectionManager swuConnectionManager,SchedulerFactory schedulerFactory) {
         this.swuid = swuid;
         this.password = password;
         this.cacheTime = cacheTime;
         this.cache = cache;
         this.graderFactory = graderFactory;
         this.swuConnectionManager = swuConnectionManager;
+        this.schedulerFactory = schedulerFactory;
     }
 
     public SwuConnectionManager getSwuConnectionManager() {
@@ -53,6 +52,10 @@ public class SwuConfig {
         return graderFactory;
     }
 
+    public SchedulerFactory getSchedulerFactory() {
+        return schedulerFactory;
+    }
+
     public static class Builder {
 
         private String swuid;
@@ -62,6 +65,7 @@ public class SwuConfig {
 
         private Cache cache;
         private GraderFactory graderFactory;
+        private SchedulerFactory schedulerFactory;
         private SwuConnectionManager swuConnectionManager;
 
         public Builder(String swuid, String password) {
@@ -100,6 +104,11 @@ public class SwuConfig {
             return this;
         }
 
+        public Builder setSchedulerFactory(SchedulerFactory schedulerFactory) {
+            this.schedulerFactory = schedulerFactory;
+            return this;
+        }
+
         public SwuConfig build() {
 
             if (this.cache == null) {
@@ -112,11 +121,14 @@ public class SwuConfig {
             if (this.graderFactory == null) {
                 this.graderFactory = new SimpleGraderFactory(this.swuid);
             }
+            if (this.schedulerFactory == null) {
+                this.schedulerFactory = new SimpleSchedulerFactory(this.swuid);
+            }
             if (this.swuConnectionManager == null) {
                 this.swuConnectionManager = DefaultSwuConnectionManager.getInstance();
             }
 
-            return new SwuConfig(this.swuid, this.password, this.cacheTime, this.cache, this.graderFactory, this.swuConnectionManager);
+            return new SwuConfig(this.swuid, this.password, this.cacheTime, this.cache, this.graderFactory, this.swuConnectionManager,this.schedulerFactory);
         }
 
 

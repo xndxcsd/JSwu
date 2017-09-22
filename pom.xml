@@ -18,6 +18,8 @@
         <module>JSwu-connection-simple</module>
         <module>JSwu-cache-simple</module>
         <module>JSwu-utils</module>
+        <module>Jswu-schedule</module>
+        <module>Jswu-schedule-simple</module>
     </modules>
     <dependencies>
         <dependency>

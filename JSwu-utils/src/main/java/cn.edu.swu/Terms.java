@@ -1,4 +1,4 @@
-package cn.edu.swu.common;
+package cn.edu.swu;
 
 /**
  * Created by 西南大学开源协会 陈思定 on 2017/6/4.

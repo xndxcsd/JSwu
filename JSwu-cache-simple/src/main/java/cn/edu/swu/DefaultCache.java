@@ -1,4 +1,4 @@
-package cn.swu.edu;
+package cn.edu.swu;
 
 
 import org.slf4j.Logger;
