@@ -63,6 +63,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
                 <configuration>
                     <!--这部分可有可无,加上的话则直接生成可运行jar包-->
                     <!--<archive>-->
